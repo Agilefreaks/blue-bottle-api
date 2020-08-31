@@ -2,7 +2,7 @@ class CoffeeShopsController < ApplicationController
   def index
     respond_to do |format|
       format.csv do
-        choose_random_response()
+        choose_random_response
       end
     end
   end
@@ -22,7 +22,7 @@ class CoffeeShopsController < ApplicationController
     elsif roll < ok_response_odds + unauthorized_response_odds + unavailable_response_odds
       head :service_unavailable
     else
-      sleep 2.minute
+      sleep 30.minute
       head :gateway_timeout
     end
   end
