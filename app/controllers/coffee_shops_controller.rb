@@ -18,7 +18,7 @@ class CoffeeShopsController < ApplicationController
     else
       respond_to do |format|
         format.json do
-          CoffeeShop.all.map(&:as_json)
+          render json: CoffeeShop.all.map(&:as_json)
         end
       end
     end
@@ -27,7 +27,7 @@ class CoffeeShopsController < ApplicationController
   private
 
     def token
-      @token ||= Token.find_by(value: request.headers['X-Token']).tap do |t|
+      @token ||= Token.find_by(value: request.headers['X-Token'])&.tap do |t|
         t.increment!(:used_count)
       end
     end
