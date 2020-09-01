@@ -6,26 +6,21 @@ class CoffeeShopsController < ApplicationController
   end
 
   def index
-    respond_to do |format|
-      format.csv do
-        choose_random_response
-      end
-    end
-  end
-
-  def choose_random_response
-
     case token.used_count
     when 4
       head :service_unavailable
     when 7
-      sleep 30.minute
+      sleep 2.minute
       head :gateway_timeout
     when 10
       token.invalidate!
       head :unauthorized
     else
-      send_file("data/coffee_shops.csv")
+      respond_to do |format|
+        format.json do
+          CoffeeShop.all.map(&:as_json)
+        end
+      end
     end
   end
 
