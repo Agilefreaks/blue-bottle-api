@@ -8,6 +8,7 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.2'
 gem 'puma', '~> 4.1'
 gem 'pg'
 gem 'dotenv-rails'
+gem 'weak_swagger_parameters'
 
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'

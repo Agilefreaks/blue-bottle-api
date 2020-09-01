@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :coffee_shops, only: [:index]
-  resources :tokens, only: [:create]
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  namespace :v1 do
+    resources :docs, only: %i[index]
+    resources :coffee_shops, only: [:index]
+    resources :tokens, only: [:create]
+  end
 end

@@ -1,0 +1,11 @@
+module V1
+  class TokensController < ApplicationController
+    add_to_doc_section(ApiVersion::V1_DOCS)
+
+    post :create, '/v1/tokens', 'Responds with a token' do
+    end
+    def create
+      render json: { token: Token.create(value: SecureRandom.hex).value }
+    end
+  end
+end
