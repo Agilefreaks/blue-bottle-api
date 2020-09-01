@@ -1,24 +1,19 @@
-# README
+# Description
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Server for interview that "randomly" fails to simulate different HTTP interactions.
 
-Things you may want to cover:
+## Dependencies
+- PostgreSQL
 
-* Ruby version
+## Setup
+- `cp .env.example .env`
+- modify database connection string for local usage
+- `rake db:schema:load`
+- `rake db:seed`
+- `rails s`
+- go to http://localhost:3000/v1/docs
 
-* System dependencies
+## Deploy
+Deploy is configured to run automatically from pushes to master and deploys here:
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+https://blue-bottle-api-test.herokuapp.com/v1/docs
