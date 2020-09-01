@@ -1,10 +1,6 @@
 class CoffeeShopsController < ApplicationController
   before_action :authorize!
 
-  def authorize!
-    token or head :unauthorized
-  end
-
   def index
     case token.used_count
     when 4
@@ -25,6 +21,9 @@ class CoffeeShopsController < ApplicationController
   end
 
   private
+    def authorize!
+      token or head :unauthorized
+    end
 
     def token
       @token ||= Token.find_by(value: request.headers['X-Token'])&.tap do |t|
