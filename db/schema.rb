@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2020_09_01_061806) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "value"
+    t.integer "used_count", default: 0
     t.boolean "disabled", default: false
   end
 

@@ -14,29 +14,26 @@ class CoffeeShopsController < ApplicationController
   end
 
   def choose_random_response
-    ok_response_odds = 5/10.0
-    unauthorized_response_odds = 2/10.0
-    unavailable_response_odds = 2/10.0
 
-    rng = Random.new
-    roll = rng.rand(1.0)
-
-    if roll < ok_response_odds
-      send_file("data/coffee_shops.csv")
-    elsif roll < ok_response_odds + unauthorized_response_odds
-      token.invalidate!
-      head :unauthorized
-    elsif roll < ok_response_odds + unauthorized_response_odds + unavailable_response_odds
+    case token.used_count
+    when 4
       head :service_unavailable
-    else
+    when 7
       sleep 30.minute
       head :gateway_timeout
+    when 10
+      token.invalidate!
+      head :unauthorized
+    else
+      send_file("data/coffee_shops.csv")
     end
   end
 
   private
 
     def token
-      @token ||= Token.find_by(value: request.headers['X-Token'])
+      @token ||= Token.find_by(value: request.headers['X-Token']).tap do |t|
+        t.increment!(:used_count)
+      end
     end
 end
