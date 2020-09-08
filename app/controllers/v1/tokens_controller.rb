@@ -5,7 +5,7 @@ module V1
     post :create, '/v1/tokens', 'Responds with a token' do
     end
     def create
-      render json: { token: Token.create(value: SecureRandom.hex).value }
+      render json: { token: Token.first_or_create(value: SecureRandom.hex).value }
     end
   end
 end
