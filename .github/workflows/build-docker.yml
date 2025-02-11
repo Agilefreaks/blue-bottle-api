@@ -1,11 +1,15 @@
 #
 name: Create and publish Prod docker image
 
-# Configures this workflow to run when a release is published
+# Configures this workflow to run on pushes to the `master` branch, and on new releases.
 on:
+  push:
+    branches:
+      - master
   release:
-    types: [published]
-
+    types:
+      - created
+      
 # Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
 env:
   REGISTRY: ghcr.io
