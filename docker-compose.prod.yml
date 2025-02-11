@@ -2,19 +2,35 @@ x-env-vars: &env-vars
   RAILS_ENV: ${RAILS_ENV}
   DATABASE_URL: ${DATABASE_URL}
   SECRET_KEY_BASE: ${SECRET_KEY_BASE}
-
+  WEB_PORT: ${WEB_PORT}
 services:
   web:
-    image: ghcr.io/agilefreaks/blue-bottle-api:latest
+    image: ghcr.io/agilefreaks/blue-bottle-api:master
     ports:
       - "${WEB_PORT:-3000}:3000"
-    volumes:
-      - .:/app:cached
+    depends_on:
+      - db
     environment:
       <<: *env-vars
     tty: true
+    command: bin/rails s -b 0.0.0.0
     logging:
       driver: "json-file"
       options:
         max-size: "100m"
         max-file: "10"
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=development
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - bbapi_pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  bbapi_pgdata: { }
