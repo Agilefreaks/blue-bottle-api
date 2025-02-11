@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+`rm ./tmp/pids/server.pid || true`
+exec "./bin/rails", "server", *ARGV

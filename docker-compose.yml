@@ -1,0 +1,36 @@
+volumes:
+  bundle_cache: { }
+  bbapi_pgdata: { }
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.dev
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    volumes:
+      - .:/app
+      - bundle_cache:/bundle
+    environment:
+      - RAILS_ENV=development
+      - BUNDLE_PATH=/bundle
+      - DATABASE_URL=postgres://postgres:postgres@db:5432/development
+      - TEST_DATABASE_URL=postgres://postgres:postgres@db:5432/test
+    tty: true
+    command: dev -b 0.0.0.0
+    restart: unless-stopped
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=development
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - bbapi_pgdata:/var/lib/postgresql/data
+    restart: unless-stopped

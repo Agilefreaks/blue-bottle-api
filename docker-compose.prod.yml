@@ -1,0 +1,21 @@
+xx-shared-logging: &shared-logging-config
+  logging:
+    driver: "json-file"
+    options:
+      max-size: "100m"
+      max-file: "10"
+
+x-env-vars: &env-vars
+  RAILS_ENV: ${RAILS_ENV}
+  DATABASE_URL: ${DATABASE_URL}
+services:
+  web:
+    image: ghcr.io/AgileFreaks/blue-bottle-api:latest
+    ports:
+      - "${WEB_PORT:-3000}:3000"
+    volumes:
+      - .:/app:cached
+    environment:
+      <<: *env-vars
+    tty: true
+    <<: *shared-logging-config

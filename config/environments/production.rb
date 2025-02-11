@@ -102,16 +102,4 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
-
-  config.after_initialize do
-    # Ensure that database is all set up on Heroku free plan
-    # Database is being disposed of after long time of it not being used.
-    require 'rake'
-
-    BlueBottleApi::Application.load_tasks unless Rake::Task.task_defined?('db:migrate')
-
-    Rake::Task['db:create'].invoke
-    Rake::Task['db:migrate'].invoke
-    Rake::Task['db:seed'].invoke
-  end
 end
