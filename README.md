@@ -16,4 +16,4 @@ Server for interview that "randomly" fails to simulate different HTTP interactio
 ## Deploy
 Deploy is configured to run automatically from pushes to master and deploys here:
 
-https://blue-bottle-api-test.herokuapp.com/v1/docs
+https://api-challenge.agilefreaks.com/swagger/index.html?url=/v1/docs.json
